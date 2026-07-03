@@ -1,7 +1,7 @@
 <?php
-class ControllerExtensionPaymentYapayc extends Controller {
+class ControllerExtensionPaymentVindicartao extends Controller {
 	public function index() {
-		$this->load->language('extension/payment/yapayc');
+		$this->load->language('extension/payment/payment_vindicartao');
 		$data['text_loading'] = $this->language->get('text_loading');
 		
 		$data['button_confirm'] = $this->language->get('button_confirm');
@@ -19,7 +19,7 @@ class ControllerExtensionPaymentYapayc extends Controller {
 		$data['entry_cc_mes'] = $this->language->get('entry_cc_mes');
 		$data['entry_cc_parc'] = $this->language->get('entry_cc_parc');
 		
-		if ($this->config->get('yapayc_type') == 0) {
+		if ($this->config->get('payment_vindicartao_type') == 0) {
 		   $data['sec'] = 'f';
 		} else {
 		   $data['sec'] = 'v'; 
@@ -32,7 +32,7 @@ class ControllerExtensionPaymentYapayc extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		$campos = $order_info['custom_field'];
 		$ttotal = $order_info['total'];
-		$doc = preg_replace("/[^0-9]/", "", $campos[$this->config->get('yapayc_doc')]);
+		$doc = preg_replace("/[^0-9]/", "", $campos[$this->config->get('payment_vindicartao_doc')]);
 		$data['doc'] = preg_replace("/[^0-9]/", "", $doc);
 		
 		$data['cards'] = array();
@@ -119,14 +119,14 @@ class ControllerExtensionPaymentYapayc extends Controller {
 			);
 		}
 		
-		return $this->load->view('extension/payment/yapayc', $data);
+		return $this->load->view('extension/payment/payment_vindicartao', $data);
 	}
 
 	public function confirm() {
-	    $this->load->language('extension/payment/yapayc');
+	    $this->load->language('extension/payment/payment_vindicartao');
 	    $json = array(); 
-		if ($this->session->data['payment_method']['code'] == 'yapayc') {
-		include_once('yapayccode.php');
+		if ($this->session->data['payment_method']['code'] == 'payment_vindicartao') {
+		include_once('payment_vindicartaocode.php');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -135,7 +135,7 @@ class ControllerExtensionPaymentYapayc extends Controller {
 	
 	public function getPay($json_convert) {
 	    
-	if ($this->config->get('yapayc_type') == 0) {
+	if ($this->config->get('payment_vindicartao_type') == 0) {
 			$url = "https://api.intermediador.sandbox.yapay.com.br/api/v3/transactions/payment";    
 			} else {
 			$url = "https://api.intermediador.yapay.com.br/api/v3/transactions/payment";     
@@ -175,28 +175,28 @@ class ControllerExtensionPaymentYapayc extends Controller {
 	        $this->load->model('checkout/order');
 			$order_info = $this->model_checkout_order->getOrder($oid);
 			
-			if ($order_info && $this->request->post['token_transaction'] && $this->request->post['transaction']['transaction_id'] && $order_info['payment_code'] == 'yapayc') {
+			if ($order_info && $this->request->post['token_transaction'] && $this->request->post['transaction']['transaction_id'] && $order_info['payment_code'] == 'payment_vindicartao') {
 		        $order_status_ids = $order_info['order_status_id'];
-				$order_status_id = $this->config->get('yapayc_order_status_id');
+				$order_status_id = $this->config->get('payment_vindicartao_order_status_id');
 
 				switch($this->request->post['transaction']['status_id']) {
 					case '4':
-						$order_status_id = $this->config->get('yapayc_order_status_id');
+						$order_status_id = $this->config->get('payment_vindicartao_order_status_id');
 						break;
 					case '6':
-						$order_status_id = $this->config->get('yapayc_order_status_id2');
+						$order_status_id = $this->config->get('payment_vindicartao_order_status_id2');
 						break;
 					case '7':
-						$order_status_id = $this->config->get('yapayc_order_status_id1');
+						$order_status_id = $this->config->get('payment_vindicartao_order_status_id1');
 						break;
 					case '24':
-						$order_status_id = $this->config->get('yapayc_order_status_id3');
+						$order_status_id = $this->config->get('payment_vindicartao_order_status_id3');
 						break;
 					case '87':
-						$order_status_id = $this->config->get('yapayc_order_status_id5');
+						$order_status_id = $this->config->get('payment_vindicartao_order_status_id5');
 						break;
 					case '89':
-						$order_status_id = $this->config->get('yapayc_order_status_id4');
+						$order_status_id = $this->config->get('payment_vindicartao_order_status_id4');
 						break;
 				}
 				
@@ -320,22 +320,22 @@ class ControllerExtensionPaymentYapayc extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		$ttotal = $order_info['total'];
 	  
-	    if (!empty($this->config->get('yapayc_parcela_min')) || $this->config->get('yapayc_parcela_min') > 0) {
-	    $parcela = $ttotal / (int)$this->config->get('yapayc_parcela_min');
+	    if (!empty($this->config->get('payment_vindicartao_parcela_min')) || $this->config->get('payment_vindicartao_parcela_min') > 0) {
+	    $parcela = $ttotal / (int)$this->config->get('payment_vindicartao_parcela_min');
 		
 		if ((int)$parcela == 0) {
 		    $parcela = 1;
-		} else if ((int)$parcela > $this->config->get('yapayc_parcela')) {
-		    $parcela = (int)$this->config->get('yapayc_parcela');
+		} else if ((int)$parcela > $this->config->get('payment_vindicartao_parcela')) {
+		    $parcela = (int)$this->config->get('payment_vindicartao_parcela');
 		} else {
 		   	$parcela = (int)$parcela;
 		}
 		
 		} else {
-			$parcela = (int)$this->config->get('yapayc_parcela');
+			$parcela = (int)$this->config->get('payment_vindicartao_parcela');
 		}
 		
-		if ($this->config->get('yapayc_type') == 0) {
+		if ($this->config->get('payment_vindicartao_type') == 0) {
 			$url = "https://api.intermediador.sandbox.yapay.com.br/v1/transactions/simulate_splitting";    
 		} else {
 			$url = "https://api.intermediador.yapay.com.br/v1/transactions/simulate_splitting";
@@ -343,7 +343,7 @@ class ControllerExtensionPaymentYapayc extends Controller {
 	
 	$header = array('Accept: application/json', 'Content-Type: application/json;charset=UTF-8', 'User-Agent: Aplicação Opencart Master');
 	
-	$vals["token_account"]  = $this->config->get('yapayc_token');
+	$vals["token_account"]  = $this->config->get('payment_vindicartao_token');
 	$vals["price"]  = $ttotal;
 	$vals["type_response"]  = "J";
 	$parcs = array(); 
