@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>Vindi Pagamentos</name>
+	<code>Vindi Pagamentos</code>
+	<version>1.0.0.0</version>
+	<author>Opencart Master</author>
+	<link>https://opencartmaster.com.br</link>
+
+	<file path="catalog/controller/checkout/success.php">
+		<operation error="skip">
+        <search trim="true"><![CDATA[unset($this->session->data['shipping_method']);]]></search>
+		<add position="before"><![CDATA[if ($this->session->data['payment_method']['code'] == 'yapayb' || $this->session->data['payment_method']['code'] == 'yapayp') {
+			$oid = $this->session->data['order_id'];
+			}]]></add>
+		</operation>
+        <operation error="skip">
+        <search trim="true"><![CDATA[if ($this->customer->isLogged()) {]]></search>
+		<add position="replace" offset="4"><![CDATA[
+            if(isset($oid)) {
+            if ($this->config->get('payment_vindicartao_status')) {
+            $nome = 'vindicartao';
+            }
+
+            if ($this->config->get('payment_vindiboleto_status')) {
+            $nome = 'vindiboleto';
+            }
+
+            if ($this->config->get('payment_vindipix_status')) {
+            $nome = 'vindipix';
+            }
+
+            $stat = $this->config->get('payment_' . $nome . '_order_status_id');
+            
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_history WHERE order_id = '" . (int)$oid . "' AND order_status_id = '" . (int)$stat . "' ORDER BY order_history_id DESC LIMIT 1");
+            
+            $data['text_message'] = nl2br($query->row['comment']);
+            } else {
+            $data['text_message'] = '';
+            }
+            
+            if ($this->customer->isLogged()) {
+                $data['text_message'] .= sprintf($this->language->get('text_customer'), $this->url->link('account/account', '', true), $this->url->link('account/order', '', true), $this->url->link('account/download', '', true), $this->url->link('information/contact'));
+            } else {
+                $data['text_message'] .= sprintf($this->language->get('text_guest'), $this->url->link('information/contact'));
+            }
+		]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/view/theme/*/template/common/header.tpl">
+		<operation error="skip">
+        <search trim="true"><![CDATA[</head>]]></search>
+		<add position="before"><![CDATA[<script src="https://static.traycheckout.com.br/js/finger_print.js" type="text/javascript"></script>
+        <script type="text/javascript"><!--
+        $(document).ready(function() {
+        $("#button-copiar").on('click', function() {
+            $("#input-copia").select();
+            try {
+            var sucesso = document.execCommand('copy');
+            if (sucesso) {
+                alert("Texto copiado para a área de transferência!");
+            } else {
+                alert("Não foi possível copiar o texto.");
+            }
+            } catch (err) {
+            console.error("Falha ao copiar o texto: ", err);
+            alert("Não foi possível copiar o texto.");
+            }
+        });
+        });
+        //--></script>
+        ]]></add>
+		</operation>
+	</file>
+
+    <file path="admin/controller/common/dashboard.php">
+    <operation error="skip">
+        <search trim="true"><![CDATA[$this->load->model('setting/extension');]]></search>
+		<add position="before"><![CDATA[
+    $this->vindi = new VindiApi($this->registry);
+    if($this->vindi->checkUpdate()) {
+		    $data['update_vindi'] = 'Nova versão do módulo <b>Vindi</b> disponível para <a href="https://www.opencart.com/index.php?route=marketplace/extension/info&extension_id=42087" target="_blank">Download</a>!'; 
+		} else {
+		   $data['update_vindi'] = '';
+		}
+    ]]></add>
+		</operation>
+	</file>
+
+    <file path="admin/view/template/common/dashboard.tpl">
+    <operation error="skip">
+        <search trim="true"><![CDATA[<?php foreach ($rows as $row) { ?>]]></search>
+		<add position="before"><![CDATA[
+    <?php if ($update_vindi) { ?>
+    <div class="alert alert-info"><i class="fa fa-exclamation-circle"></i> <?php echo $update_vindi; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    ]]></add>
+		</operation>
+	</file>
+
+</modification>
