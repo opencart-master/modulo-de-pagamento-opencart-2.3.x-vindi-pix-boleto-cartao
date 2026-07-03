@@ -1,1 +1,58 @@
-# modulo-de-pagamento-opencart-2.3.x-vindi-pix-boleto-cartao
+# Integração Vindi API com OpenCart 3.x
+
+## 📌 Visão Geral
+A integração entre **Vindi Pagamentos** e **OpenCart 2.3.x** permite receber pagamentos, pix, boleto e cartão diretamente pela API da Vindi, enquanto o OpenCart continua responsável pela experiência de compra e gestão de pedidos.
+
+Este guia descreve:
+- Requisitos
+- Configuração da API
+- Configuração Opencart
+- Documentação Oficial
+
+---
+
+## 🧩 Requisitos
+
+- OpenCart **2.3.x**
+- PHP **>= 5.6**
+- Extensão **cURL** habilitada
+- Conta ativa na **Vindi**
+- Chave de API Vindi (Token)
+
+---
+
+## 🔑 Obtendo a API Key da Vindi
+
+1. Acesse o painel da Vindi  
+2. Vá em **Configurações → API → Chaves de API**  
+3. Gere ou copie sua **API Key**  
+4. Guarde-a para configurar no módulo do OpenCart
+
+---
+
+## 🛒 Configuração OpenCart
+
+1. Acesso o **Menu Extensões → Extensões → Forma de Pagamento**
+2. Habilite os módulos desejados **PIX, BOLETO ou CARTÃO**
+3. Editar o módulo após habilitado
+4. Realize as configurações incluíndo o token da Vindi.
+5. Salvar as configurações
+
+---
+
+## 📚 Documentação Oficial
+
+- API Vindi: [https://vindi.github.io/api-docs/](https://vindi.github.io/api-docs/)
+- OpenCart Download: [https://opencart.com/](https://www.opencart.com/index.php?route=marketplace/extension/info&extension_id=42087)
+
+---
+
+✅ Módulo completo e homologado
+
+✅ Facil instalação
+
+✅ Checkout transparente
+
+✅ Versão com suporte
+
+✅ Parceiro Oficial Opencart
