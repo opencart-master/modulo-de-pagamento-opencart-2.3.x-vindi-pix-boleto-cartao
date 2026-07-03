@@ -7,7 +7,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/yapayp/confirm',
+		url: 'index.php?route=extension/payment/vindipix/confirm',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').button('loading');

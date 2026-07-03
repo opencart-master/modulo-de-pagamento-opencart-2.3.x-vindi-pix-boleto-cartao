@@ -7,7 +7,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/payment/yapayb/confirm',
+		url: 'index.php?route=extension/payment/vindiboleto/confirm',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
