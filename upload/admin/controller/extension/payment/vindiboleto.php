@@ -3,6 +3,7 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 	private $error = array();
 
 	public function index() {
+		$this->vindi = new VindiApi($this->registry);
 		$this->load->language('extension/payment/vindiboleto');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -16,11 +17,6 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 
 			$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true));
 		}
-
-		$this->remover();
-		
-		$data['version'] = $this->ver();
-		$data['module_name'] = 'vindiboleto';
 		
 		$data['text_terms'] = $this->language->get('text_terms');
 		$data['text_support'] = $this->language->get('text_support');
@@ -68,7 +64,11 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		
 		$data['murl'] = 'https://www.opencart.com/index.php?route=marketplace/extension/info&extension_id=42087';
-		$data['atual'] = $this->checkForUpdate();
+		$data['module_name'] = "Vindi Pagamentos";
+
+		$data['atual'] = $this->vindi->checkUpdate();
+		$data['version'] = $this->vindi->moduleVersion();
+		$this->vindi->check();
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -242,46 +242,6 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/payment/vindiboleto', $data));
-	}
-	
-	public function checkForUpdate() {
-        $ver = 0;
-		$url = base64_decode('aHR0cHM6Ly93d3cub3BlbmNhcnRtYXN0ZXIuY29tLmJyL21vZHVsZS92ZXJzaW9uLw==');
-        $json_convert  = array('module' => 'vindiboleto');
-
-        $soap_do = curl_init();
-        curl_setopt($soap_do, CURLOPT_URL, $url);
-        curl_setopt($soap_do, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($soap_do, CURLOPT_TIMEOUT,        10);
-        curl_setopt($soap_do, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($soap_do, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt($soap_do, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($soap_do, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($soap_do, CURLOPT_POST,           true );
-        curl_setopt($soap_do, CURLOPT_POSTFIELDS,     $json_convert);
-
-        $response = curl_exec($soap_do); 
-        curl_close($soap_do);
-        $resposta = json_decode($response, true);
-		
-		if (version_compare($resposta['mensagem'], $this->ver(), '>')) {
-        $ver = 1;
-        }
-		return $ver;
-	}
-	
-	public function ver() {
-		$ver = '1.9.0.5';
-		return $ver;
-	}
-
-	public function remover() {
-        if (is_file(DIR_SYSTEM .'rastreio-yapay.ocmod.xml')) {
-	 	unlink(DIR_SYSTEM .'rastreio-yapay.ocmod.xml');
-    	}
-		if (is_file(DIR_CATALOG .'view/theme/journal2/template/extension/payment/vindiboleto.tpl')) {
-	 	unlink(DIR_CATALOG .'view/theme/journal2/template/extension/payment/vindiboleto.tpl');
-    	}
 	}
 
 	protected function validate() {
