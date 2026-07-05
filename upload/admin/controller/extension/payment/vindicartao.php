@@ -4,7 +4,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 
 	public function index() {
 		$this->vindi = new VindiApi($this->registry);
-		$this->load->language('extension/payment/payment_vindicartao');
+		$this->load->language('extension/payment/vindicartao');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -123,10 +123,10 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/payment_vindicartao', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/vindicartao', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/payment_vindicartao', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/vindicartao', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 		
@@ -278,11 +278,11 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/payment/payment_vindicartao', $data));
+		$this->response->setOutput($this->load->view('extension/payment/vindicartao', $data));
 	}
 	
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/payment/payment_vindicartao')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/vindicartao')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		

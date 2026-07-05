@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionPaymentVindicartao extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('extension/payment/payment_vindicartao');
+		$this->load->language('extension/payment/vindicartao');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_vindicartao_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -19,7 +19,7 @@ class ModelExtensionPaymentVindicartao extends Model {
 
 		if ($status) {
 			$method_data = array(
-				'code'       => 'payment_vindicartao',
+				'code'       => 'vindicartao',
 				'title'      => $this->config->get('payment_vindicartao_title'),
 				'terms'      => '',
 				'sort_order' => $this->config->get('payment_vindicartao_sort_order')

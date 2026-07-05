@@ -291,15 +291,15 @@
 		</div>
            
        <div class="tab-pane" id="tab-help">
-	   <fieldset>
+	     <fieldset>
        <legend><?php echo $text_h; ?></legend>
-       <h4><i class="fa fa-code"></i> <?php echo $text_m; ?> <?php echo $module_name; ?> - <?php echo $text_v; ?> <?php echo $version; ?> </h4>
+       <h4><i class="fa fa-code"></i> <?php echo $module_name; ?> - <?php echo $version; ?> </h4>
        <h4><i class="fa fa-envelope"></i> <a href="mailto:suporte@opencartmaster.com.br">suporte@opencartmaster.com.br</a></h4>
        <h4><i class="fa fa-whatsapp"></i> <a href="https://wa.me/551142542450" target="_blank">11 4254-2450</a></h4>
-       <h4><i class="fa fa-globe"></i> https://www.opencartmaster.com.br</h4>
-	   <p><?php echo $text_support; ?></p>
+       <h4><i class="fa fa-globe"></i><a href="https://opencartmaster.com.br" target="_blank">opencartmaster.com.br</a></h4>
+	     <p><?php echo $text_support; ?></p>
        </fieldset>
-	   </div>
+	     </div>
 		 
 		</div>
         </form>

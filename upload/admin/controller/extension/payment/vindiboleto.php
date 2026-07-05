@@ -11,7 +11,7 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('vindiboleto', $this->request->post);
+			$this->model_setting_setting->editSetting('payment_vindiboleto', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -121,116 +121,116 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 		
-		if (isset($this->request->post['vindiboleto_title'])) {
-			$data['vindiboleto_title'] = $this->request->post['vindiboleto_title'];
+		if (isset($this->request->post['payment_vindiboleto_title'])) {
+			$data['payment_vindiboleto_title'] = $this->request->post['payment_vindiboleto_title'];
 		} else {
-			$data['vindiboleto_title'] = $this->config->get('vindiboleto_title');
+			$data['payment_vindiboleto_title'] = $this->config->get('payment_vindiboleto_title');
 		}
 
-		if (isset($this->request->post['vindiboleto_token'])) {
-			$data['vindiboleto_token'] = $this->request->post['vindiboleto_token'];
+		if (isset($this->request->post['payment_vindiboleto_token'])) {
+			$data['payment_vindiboleto_token'] = $this->request->post['payment_vindiboleto_token'];
 		} else {
-			$data['vindiboleto_token'] = $this->config->get('vindiboleto_token');
+			$data['payment_vindiboleto_token'] = $this->config->get('payment_vindiboleto_token');
 		}
 		
-		if (isset($this->request->post['vindiboleto_days'])) {
-			$data['vindiboleto_days'] = $this->request->post['vindiboleto_days'];
+		if (isset($this->request->post['payment_vindiboleto_days'])) {
+			$data['payment_vindiboleto_days'] = $this->request->post['payment_vindiboleto_days'];
 		} else {
-			$data['vindiboleto_days'] = $this->config->get('vindiboleto_days');
+			$data['payment_vindiboleto_days'] = $this->config->get('payment_vindiboleto_days');
 		}
 		
-		if (isset($this->request->post['vindiboleto_doc'])) {
-			$data['vindiboleto_doc'] = $this->request->post['vindiboleto_doc'];
+		if (isset($this->request->post['payment_vindiboleto_doc'])) {
+			$data['payment_vindiboleto_doc'] = $this->request->post['payment_vindiboleto_doc'];
 		} else {
-			$data['vindiboleto_doc'] = $this->config->get('vindiboleto_doc');
+			$data['payment_vindiboleto_doc'] = $this->config->get('payment_vindiboleto_doc');
 		}
 		
-		if (isset($this->request->post['vindiboleto_doc2'])) {
-			$data['vindiboleto_doc2'] = $this->request->post['vindiboleto_doc2'];
+		if (isset($this->request->post['payment_vindiboleto_doc2'])) {
+			$data['payment_vindiboleto_doc2'] = $this->request->post['payment_vindiboleto_doc2'];
 		} else {
-			$data['vindiboleto_doc2'] = $this->config->get('vindiboleto_doc2');
+			$data['payment_vindiboleto_doc2'] = $this->config->get('payment_vindiboleto_doc2');
 		}
 		
-		if (isset($this->request->post['vindiboleto_raz'])) {
-			$data['vindiboleto_raz'] = $this->request->post['vindiboleto_raz'];
+		if (isset($this->request->post['payment_vindiboleto_raz'])) {
+			$data['payment_vindiboleto_raz'] = $this->request->post['payment_vindiboleto_raz'];
 		} else {
-			$data['vindiboleto_raz'] = $this->config->get('vindiboleto_raz');
+			$data['payment_vindiboleto_raz'] = $this->config->get('payment_vindiboleto_raz');
 		}
 		
-		if (isset($this->request->post['vindiboleto_type'])) {
-			$data['vindiboleto_type'] = $this->request->post['vindiboleto_type'];
+		if (isset($this->request->post['payment_vindiboleto_type'])) {
+			$data['payment_vindiboleto_type'] = $this->request->post['payment_vindiboleto_type'];
 		} else {
-			$data['vindiboleto_type'] = $this->config->get('vindiboleto_type');
+			$data['payment_vindiboleto_type'] = $this->config->get('payment_vindiboleto_type');
 		}
 		
-		if (isset($this->request->post['vindiboleto_number'])) {
-			$data['vindiboleto_number'] = $this->request->post['vindiboleto_number'];
+		if (isset($this->request->post['payment_vindiboleto_number'])) {
+			$data['payment_vindiboleto_number'] = $this->request->post['payment_vindiboleto_number'];
 		} else {
-			$data['vindiboleto_number'] = $this->config->get('vindiboleto_number');
+			$data['payment_vindiboleto_number'] = $this->config->get('payment_vindiboleto_number');
 		}
 		
-		if (isset($this->request->post['vindiboleto_complement'])) {
-			$data['vindiboleto_complement'] = $this->request->post['vindiboleto_complement'];
+		if (isset($this->request->post['payment_vindiboleto_complement'])) {
+			$data['payment_vindiboleto_complement'] = $this->request->post['payment_vindiboleto_complement'];
 		} else {
-			$data['vindiboleto_complement'] = $this->config->get('vindiboleto_complement');
+			$data['payment_vindiboleto_complement'] = $this->config->get('payment_vindiboleto_complement');
 		}
 		
-		if (isset($this->request->post['vindiboleto_total'])) {
-			$data['vindiboleto_total'] = $this->request->post['vindiboleto_total'];
-		} elseif($this->config->has('vindiboleto_total')) {
-			$data['vindiboleto_total'] = $this->config->get('vindiboleto_total');
+		if (isset($this->request->post['payment_vindiboleto_total'])) {
+			$data['payment_vindiboleto_total'] = $this->request->post['payment_vindiboleto_total'];
+		} elseif($this->config->has('payment_vindiboleto_total')) {
+			$data['payment_vindiboleto_total'] = $this->config->get('payment_vindiboleto_total');
 		} else {
-			$data['vindiboleto_total'] = 3.00;
+			$data['payment_vindiboleto_total'] = 5.00;
 		}
 
-		if (isset($this->request->post['vindiboleto_order_status_id'])) {
-			$data['vindiboleto_order_status_id'] = $this->request->post['vindiboleto_order_status_id'];
+		if (isset($this->request->post['payment_vindiboleto_order_status_id'])) {
+			$data['payment_vindiboleto_order_status_id'] = $this->request->post['payment_vindiboleto_order_status_id'];
 		} else {
-			$data['vindiboleto_order_status_id'] = $this->config->get('vindiboleto_order_status_id');
+			$data['payment_vindiboleto_order_status_id'] = $this->config->get('payment_vindiboleto_order_status_id');
 		}
 		
-		if (isset($this->request->post['vindiboleto_order_status_id1'])) {
-			$data['vindiboleto_order_status_id1'] = $this->request->post['vindiboleto_order_status_id1'];
+		if (isset($this->request->post['payment_vindiboleto_order_status_id1'])) {
+			$data['payment_vindiboleto_order_status_id1'] = $this->request->post['payment_vindiboleto_order_status_id1'];
 		} else {
-			$data['vindiboleto_order_status_id1'] = $this->config->get('vindiboleto_order_status_id1');
+			$data['payment_vindiboleto_order_status_id1'] = $this->config->get('payment_vindiboleto_order_status_id1');
 		}
 		
-		if (isset($this->request->post['vindiboleto_order_status_id2'])) {
-			$data['vindiboleto_order_status_id2'] = $this->request->post['vindiboleto_order_status_id2'];
+		if (isset($this->request->post['payment_vindiboleto_order_status_id2'])) {
+			$data['payment_vindiboleto_order_status_id2'] = $this->request->post['payment_vindiboleto_order_status_id2'];
 		} else {
-			$data['vindiboleto_order_status_id2'] = $this->config->get('vindiboleto_order_status_id2');
+			$data['payment_vindiboleto_order_status_id2'] = $this->config->get('payment_vindiboleto_order_status_id2');
 		}
 		
-		if (isset($this->request->post['vindiboleto_order_status_id3'])) {
-			$data['vindiboleto_order_status_id3'] = $this->request->post['vindiboleto_order_status_id3'];
+		if (isset($this->request->post['payment_vindiboleto_order_status_id3'])) {
+			$data['payment_vindiboleto_order_status_id3'] = $this->request->post['payment_vindiboleto_order_status_id3'];
 		} else {
-			$data['vindiboleto_order_status_id3'] = $this->config->get('vindiboleto_order_status_id3');
+			$data['payment_vindiboleto_order_status_id3'] = $this->config->get('payment_vindiboleto_order_status_id3');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['vindiboleto_geo_zone_id'])) {
-			$data['vindiboleto_geo_zone_id'] = $this->request->post['vindiboleto_geo_zone_id'];
+		if (isset($this->request->post['payment_vindiboleto_geo_zone_id'])) {
+			$data['payment_vindiboleto_geo_zone_id'] = $this->request->post['payment_vindiboleto_geo_zone_id'];
 		} else {
-			$data['vindiboleto_geo_zone_id'] = $this->config->get('vindiboleto_geo_zone_id');
+			$data['payment_vindiboleto_geo_zone_id'] = $this->config->get('payment_vindiboleto_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['vindiboleto_status'])) {
-			$data['vindiboleto_status'] = $this->request->post['vindiboleto_status'];
+		if (isset($this->request->post['payment_vindiboleto_status'])) {
+			$data['payment_vindiboleto_status'] = $this->request->post['payment_vindiboleto_status'];
 		} else {
-			$data['vindiboleto_status'] = $this->config->get('vindiboleto_status');
+			$data['payment_vindiboleto_status'] = $this->config->get('payment_vindiboleto_status');
 		}
 
-		if (isset($this->request->post['vindiboleto_sort_order'])) {
-			$data['vindiboleto_sort_order'] = $this->request->post['vindiboleto_sort_order'];
+		if (isset($this->request->post['payment_vindiboleto_sort_order'])) {
+			$data['payment_vindiboleto_sort_order'] = $this->request->post['payment_vindiboleto_sort_order'];
 		} else {
-			$data['vindiboleto_sort_order'] = $this->config->get('vindiboleto_sort_order');
+			$data['payment_vindiboleto_sort_order'] = $this->config->get('payment_vindiboleto_sort_order');
 		}
 		
 		$this->load->model('customer/custom_field');
@@ -249,19 +249,19 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!isset($this->request->post['vindiboleto_token']) || $this->request->post['vindiboleto_token'] == '' ) {
+		if (!isset($this->request->post['payment_vindiboleto_token']) || $this->request->post['payment_vindiboleto_token'] == '' ) {
 			$this->error['token'] = $this->language->get('error_token');
 		}
 		
-		if (!isset($this->request->post['vindiboleto_doc']) || $this->request->post['vindiboleto_doc'] == '' ) {
+		if (!isset($this->request->post['payment_vindiboleto_doc']) || $this->request->post['payment_vindiboleto_doc'] == '' ) {
 			$this->error['doc'] = $this->language->get('error_doc');
 		}
 		
-		if (!isset($this->request->post['vindiboleto_title']) || $this->request->post['vindiboleto_title'] == '' ) {
+		if (!isset($this->request->post['payment_vindiboleto_title']) || $this->request->post['payment_vindiboleto_title'] == '' ) {
 			$this->error['title'] = $this->language->get('error_title');
 		}
 		
-		if (!isset($this->request->post['vindiboleto_number']) || $this->request->post['vindiboleto_number'] == '' ) {
+		if (!isset($this->request->post['payment_vindiboleto_number']) || $this->request->post['payment_vindiboleto_number'] == '' ) {
 			$this->error['number'] = $this->language->get('error_number');
 		}
 

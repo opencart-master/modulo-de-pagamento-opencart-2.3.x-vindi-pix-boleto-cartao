@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionPaymentVindipix extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('extension/payment/payment_vindipix');
+		$this->load->language('extension/payment/vindipix');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('payment_vindipix_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -19,7 +19,7 @@ class ModelExtensionPaymentVindipix extends Model {
 
 		if ($status) {
 			$method_data = array(
-				'code'       => 'payment_vindipix',
+				'code'       => 'vindipix',
 				'title'      => $this->config->get('payment_vindipix_title'),
 				'terms'      => '',
 				'sort_order' => $this->config->get('payment_vindipix_sort_order')

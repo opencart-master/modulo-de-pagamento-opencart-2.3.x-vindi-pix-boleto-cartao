@@ -4,7 +4,7 @@ class ControllerExtensionPaymentVindipix extends Controller {
 
 	public function index() {
 		$this->vindi = new VindiApi($this->registry);
-		$this->load->language('extension/payment/payment_vindipix');
+		$this->load->language('extension/payment/vindipix');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -114,10 +114,10 @@ class ControllerExtensionPaymentVindipix extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/payment/payment_vindipix', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->link('extension/payment/vindipix', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('extension/payment/payment_vindipix', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->link('extension/payment/vindipix', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 		
@@ -180,7 +180,7 @@ class ControllerExtensionPaymentVindipix extends Controller {
 		} elseif($this->config->has('payment_vindipix_total')) {
 			$data['payment_vindipix_total'] = $this->config->get('payment_vindipix_total');
 		} else {
-			$data['payment_vindipix_total'] = 3.00;
+			$data['payment_vindipix_total'] = 5.00;
 		}
 
 		if (isset($this->request->post['payment_vindipix_order_status_id'])) {
@@ -241,11 +241,11 @@ class ControllerExtensionPaymentVindipix extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/payment/payment_vindipix', $data));
+		$this->response->setOutput($this->load->view('extension/payment/vindipix', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/payment/payment_vindipix')) {
+		if (!$this->user->hasPermission('modify', 'extension/payment/vindipix')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
