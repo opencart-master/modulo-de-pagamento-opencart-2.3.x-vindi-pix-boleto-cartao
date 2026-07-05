@@ -300,7 +300,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		$val["finger_print"] = $finger_print;
 		
 		if (!isset($json['error'])){
-		$resposta = $this->getPay($json_convert);
+		$resposta = $this->getPay($val);
 			
 		if ($this->vindi->sandbox()) {
 				$this->log->write('DEV PAYLOAD' . json_encode($val));
@@ -562,34 +562,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 	$vals["type_response"]  = "J";
 
     $resps = $this->vindi->getSplitting($vals);
-		
-	/*	if ($this->config->get('payment_vindicartao_type') == 0) {
-			$url = "https://api.intermediador.sandbox.yapay.com.br/v1/transactions/simulate_splitting";    
-		} else {
-			$url = "https://api.intermediador.yapay.com.br/v1/transactions/simulate_splitting";
-    	}
-	
-	$header = array('Accept: application/json', 'Content-Type: application/json;charset=UTF-8', 'User-Agent: Aplicação Opencart Master');
-
-	$json_convert = json_encode($vals);
-	
-	$soap_do = curl_init();
-    curl_setopt($soap_do, CURLOPT_URL, $url);
-    curl_setopt($soap_do, CURLOPT_CONNECTTIMEOUT, 10);
-    curl_setopt($soap_do, CURLOPT_TIMEOUT,        10);
-    curl_setopt($soap_do, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($soap_do, CURLOPT_RETURNTRANSFER, true );
-    curl_setopt($soap_do, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($soap_do, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($soap_do, CURLOPT_POST,           true );
-    curl_setopt($soap_do, CURLOPT_POSTFIELDS,     $json_convert);
-    curl_setopt($soap_do, CURLOPT_HTTPHEADER,     $header);
-    $response = curl_exec($soap_do); 
-    curl_close($soap_do);
-	$resps = json_decode($response, true);
-
-	*/
-   
+		  
     if($resps['message_response']['message'] == 'success') {
         
         foreach($resps['data_response']['payment_methods'] as $key => $value) {
