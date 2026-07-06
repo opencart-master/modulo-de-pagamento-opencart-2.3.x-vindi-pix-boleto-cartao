@@ -11,7 +11,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('payment_vindicartao', $this->request->post);
+			$this->model_setting_setting->editSetting('vindicartao', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -31,7 +31,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_edit'] = sprintf($this->language->get('text_edit'), $this->ver());
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -130,144 +130,144 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 		
-		if (isset($this->request->post['payment_vindicartao_title'])) {
-			$data['payment_vindicartao_title'] = $this->request->post['payment_vindicartao_title'];
+		if (isset($this->request->post['vindicartao_title'])) {
+			$data['vindicartao_title'] = $this->request->post['vindicartao_title'];
 		} else {
-			$data['payment_vindicartao_title'] = $this->config->get('payment_vindicartao_title');
+			$data['vindicartao_title'] = $this->config->get('vindicartao_title');
 		}
 
-		if (isset($this->request->post['payment_vindicartao_token'])) {
-			$data['payment_vindicartao_token'] = $this->request->post['payment_vindicartao_token'];
+		if (isset($this->request->post['vindicartao_token'])) {
+			$data['vindicartao_token'] = $this->request->post['vindicartao_token'];
 		} else {
-			$data['payment_vindicartao_token'] = $this->config->get('payment_vindicartao_token');
+			$data['vindicartao_token'] = $this->config->get('vindicartao_token');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_days'])) {
-			$data['payment_vindicartao_days'] = $this->request->post['payment_vindicartao_days'];
+		if (isset($this->request->post['vindicartao_days'])) {
+			$data['vindicartao_days'] = $this->request->post['vindicartao_days'];
 		} else {
-			$data['payment_vindicartao_days'] = $this->config->get('payment_vindicartao_days');
+			$data['vindicartao_days'] = $this->config->get('vindicartao_days');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_doc'])) {
-			$data['payment_vindicartao_doc'] = $this->request->post['payment_vindicartao_doc'];
+		if (isset($this->request->post['vindicartao_doc'])) {
+			$data['vindicartao_doc'] = $this->request->post['vindicartao_doc'];
 		} else {
-			$data['payment_vindicartao_doc'] = $this->config->get('payment_vindicartao_doc');
+			$data['vindicartao_doc'] = $this->config->get('vindicartao_doc');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_doc2'])) {
-			$data['payment_vindicartao_doc2'] = $this->request->post['payment_vindicartao_doc2'];
+		if (isset($this->request->post['vindicartao_doc2'])) {
+			$data['vindicartao_doc2'] = $this->request->post['vindicartao_doc2'];
 		} else {
-			$data['payment_vindicartao_doc2'] = $this->config->get('payment_vindicartao_doc2');
+			$data['vindicartao_doc2'] = $this->config->get('vindicartao_doc2');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_raz'])) {
-			$data['payment_vindicartao_raz'] = $this->request->post['payment_vindicartao_raz'];
+		if (isset($this->request->post['vindicartao_raz'])) {
+			$data['vindicartao_raz'] = $this->request->post['vindicartao_raz'];
 		} else {
-			$data['payment_vindicartao_raz'] = $this->config->get('payment_vindicartao_raz');
+			$data['vindicartao_raz'] = $this->config->get('vindicartao_raz');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_type'])) {
-			$data['payment_vindicartao_type'] = $this->request->post['payment_vindicartao_type'];
+		if (isset($this->request->post['vindicartao_type'])) {
+			$data['vindicartao_type'] = $this->request->post['vindicartao_type'];
 		} else {
-			$data['payment_vindicartao_type'] = $this->config->get('payment_vindicartao_type');
+			$data['vindicartao_type'] = $this->config->get('vindicartao_type');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_number'])) {
-			$data['payment_vindicartao_number'] = $this->request->post['payment_vindicartao_number'];
+		if (isset($this->request->post['vindicartao_number'])) {
+			$data['vindicartao_number'] = $this->request->post['vindicartao_number'];
 		} else {
-			$data['payment_vindicartao_number'] = $this->config->get('payment_vindicartao_number');
+			$data['vindicartao_number'] = $this->config->get('vindicartao_number');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_complement'])) {
-			$data['payment_vindicartao_complement'] = $this->request->post['payment_vindicartao_complement'];
+		if (isset($this->request->post['vindicartao_complement'])) {
+			$data['vindicartao_complement'] = $this->request->post['vindicartao_complement'];
 		} else {
-			$data['payment_vindicartao_complement'] = $this->config->get('payment_vindicartao_complement');
+			$data['vindicartao_complement'] = $this->config->get('vindicartao_complement');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_total'])) {
-			$data['payment_vindicartao_total'] = $this->request->post['payment_vindicartao_total'];
-		} elseif($this->config->has('payment_vindicartao_total')) {
-			$data['payment_vindicartao_total'] = $this->config->get('payment_vindicartao_total');
+		if (isset($this->request->post['vindicartao_total'])) {
+			$data['vindicartao_total'] = $this->request->post['vindicartao_total'];
+		} elseif($this->config->has('vindicartao_total')) {
+			$data['vindicartao_total'] = $this->config->get('vindicartao_total');
 		} else {
-			$data['payment_vindicartao_total'] = 5.00;
+			$data['vindicartao_total'] = 5.00;
 		}
 		
-   		if (isset($this->request->post['payment_vindicartao_parcela'])) {
-			$data['payment_vindicartao_parcela'] = $this->request->post['payment_vindicartao_parcela'];
-		} elseif($this->config->has('payment_vindicartao_parcela')) {
-			$data['payment_vindicartao_parcela'] = $this->config->get('payment_vindicartao_parcela');
+   		if (isset($this->request->post['vindicartao_parcela'])) {
+			$data['vindicartao_parcela'] = $this->request->post['vindicartao_parcela'];
+		} elseif($this->config->has('vindicartao_parcela')) {
+			$data['vindicartao_parcela'] = $this->config->get('vindicartao_parcela');
 		} else {
-			$data['payment_vindicartao_parcela'] = 12;
+			$data['vindicartao_parcela'] = 12;
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_parcela_min'])) {
-			$data['payment_vindicartao_parcela_min'] = $this->request->post['payment_vindicartao_parcela_min'];
-		} elseif($this->config->has('payment_vindicartao_parcela_min')) {
-			$data['payment_vindicartao_parcela_min'] = $this->config->get('payment_vindicartao_parcela_min');
+		if (isset($this->request->post['vindicartao_parcela_min'])) {
+			$data['vindicartao_parcela_min'] = $this->request->post['vindicartao_parcela_min'];
+		} elseif($this->config->has('vindicartao_parcela_min')) {
+			$data['vindicartao_parcela_min'] = $this->config->get('vindicartao_parcela_min');
 		} else {
-			$data['payment_vindicartao_parcela_min'] = 5.00;
+			$data['vindicartao_parcela_min'] = 5.00;
 		}
 
-		if (isset($this->request->post['payment_vindicartao_order_status_id'])) {
-			$data['payment_vindicartao_order_status_id'] = $this->request->post['payment_vindicartao_order_status_id'];
+		if (isset($this->request->post['vindicartao_order_status_id'])) {
+			$data['vindicartao_order_status_id'] = $this->request->post['vindicartao_order_status_id'];
 		} else {
-			$data['payment_vindicartao_order_status_id'] = $this->config->get('payment_vindicartao_order_status_id');
+			$data['vindicartao_order_status_id'] = $this->config->get('vindicartao_order_status_id');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_order_status_id1'])) {
-			$data['payment_vindicartao_order_status_id1'] = $this->request->post['payment_vindicartao_order_status_id1'];
+		if (isset($this->request->post['vindicartao_order_status_id1'])) {
+			$data['vindicartao_order_status_id1'] = $this->request->post['vindicartao_order_status_id1'];
 		} else {
-			$data['payment_vindicartao_order_status_id1'] = $this->config->get('payment_vindicartao_order_status_id1');
+			$data['vindicartao_order_status_id1'] = $this->config->get('vindicartao_order_status_id1');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_order_status_id2'])) {
-			$data['payment_vindicartao_order_status_id2'] = $this->request->post['payment_vindicartao_order_status_id2'];
+		if (isset($this->request->post['vindicartao_order_status_id2'])) {
+			$data['vindicartao_order_status_id2'] = $this->request->post['vindicartao_order_status_id2'];
 		} else {
-			$data['payment_vindicartao_order_status_id2'] = $this->config->get('payment_vindicartao_order_status_id2');
+			$data['vindicartao_order_status_id2'] = $this->config->get('vindicartao_order_status_id2');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_order_status_id3'])) {
-			$data['payment_vindicartao_order_status_id3'] = $this->request->post['payment_vindicartao_order_status_id3'];
+		if (isset($this->request->post['vindicartao_order_status_id3'])) {
+			$data['vindicartao_order_status_id3'] = $this->request->post['vindicartao_order_status_id3'];
 		} else {
-			$data['payment_vindicartao_order_status_id3'] = $this->config->get('payment_vindicartao_order_status_id3');
+			$data['vindicartao_order_status_id3'] = $this->config->get('vindicartao_order_status_id3');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_order_status_id4'])) {
-			$data['payment_vindicartao_order_status_id4'] = $this->request->post['payment_vindicartao_order_status_id4'];
+		if (isset($this->request->post['vindicartao_order_status_id4'])) {
+			$data['vindicartao_order_status_id4'] = $this->request->post['vindicartao_order_status_id4'];
 		} else {
-			$data['payment_vindicartao_order_status_id4'] = $this->config->get('payment_vindicartao_order_status_id4');
+			$data['vindicartao_order_status_id4'] = $this->config->get('vindicartao_order_status_id4');
 		}
 		
-		if (isset($this->request->post['payment_vindicartao_order_status_id5'])) {
-			$data['payment_vindicartao_order_status_id5'] = $this->request->post['payment_vindicartao_order_status_id5'];
+		if (isset($this->request->post['vindicartao_order_status_id5'])) {
+			$data['vindicartao_order_status_id5'] = $this->request->post['vindicartao_order_status_id5'];
 		} else {
-			$data['payment_vindicartao_order_status_id5'] = $this->config->get('payment_vindicartao_order_status_id5');
+			$data['vindicartao_order_status_id5'] = $this->config->get('vindicartao_order_status_id5');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['payment_vindicartao_geo_zone_id'])) {
-			$data['payment_vindicartao_geo_zone_id'] = $this->request->post['payment_vindicartao_geo_zone_id'];
+		if (isset($this->request->post['vindicartao_geo_zone_id'])) {
+			$data['vindicartao_geo_zone_id'] = $this->request->post['vindicartao_geo_zone_id'];
 		} else {
-			$data['payment_vindicartao_geo_zone_id'] = $this->config->get('payment_vindicartao_geo_zone_id');
+			$data['vindicartao_geo_zone_id'] = $this->config->get('vindicartao_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['payment_vindicartao_status'])) {
-			$data['payment_vindicartao_status'] = $this->request->post['payment_vindicartao_status'];
+		if (isset($this->request->post['vindicartao_status'])) {
+			$data['vindicartao_status'] = $this->request->post['vindicartao_status'];
 		} else {
-			$data['payment_vindicartao_status'] = $this->config->get('payment_vindicartao_status');
+			$data['vindicartao_status'] = $this->config->get('vindicartao_status');
 		}
 
-		if (isset($this->request->post['payment_vindicartao_sort_order'])) {
-			$data['payment_vindicartao_sort_order'] = $this->request->post['payment_vindicartao_sort_order'];
+		if (isset($this->request->post['vindicartao_sort_order'])) {
+			$data['vindicartao_sort_order'] = $this->request->post['vindicartao_sort_order'];
 		} else {
-			$data['payment_vindicartao_sort_order'] = $this->config->get('payment_vindicartao_sort_order');
+			$data['vindicartao_sort_order'] = $this->config->get('vindicartao_sort_order');
 		}
 		
 		$this->load->model('customer/custom_field');
@@ -286,23 +286,23 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!isset($this->request->post['payment_vindicartao_token']) || $this->request->post['payment_vindicartao_token'] == '' ) {
+		if (!isset($this->request->post['vindicartao_token']) || $this->request->post['vindicartao_token'] == '' ) {
 			$this->error['token'] = $this->language->get('error_token');
 		}
 		
-		if (!isset($this->request->post['payment_vindicartao_doc']) || $this->request->post['payment_vindicartao_doc'] == '' ) {
+		if (!isset($this->request->post['vindicartao_doc']) || $this->request->post['vindicartao_doc'] == '' ) {
 			$this->error['doc'] = $this->language->get('error_doc');
 		}
 		
-		if (!isset($this->request->post['payment_vindicartao_title']) || $this->request->post['payment_vindicartao_title'] == '' ) {
+		if (!isset($this->request->post['vindicartao_title']) || $this->request->post['vindicartao_title'] == '' ) {
 			$this->error['title'] = $this->language->get('error_title');
 		}
 		
-		if (!isset($this->request->post['payment_vindicartao_number']) || $this->request->post['payment_vindicartao_number'] == '' ) {
+		if (!isset($this->request->post['vindicartao_number']) || $this->request->post['vindicartao_number'] == '' ) {
 			$this->error['number'] = $this->language->get('error_number');
 		}
 		
-		if (!isset($this->request->post['payment_vindicartao_parcela']) || $this->request->post['payment_vindicartao_parcela'] < 1 || $this->request->post['payment_vindicartao_parcela'] > 12) {
+		if (!isset($this->request->post['vindicartao_parcela']) || $this->request->post['vindicartao_parcela'] < 1 || $this->request->post['vindicartao_parcela'] > 12) {
 			$this->error['parct'] = $this->language->get('error_parcela');
 		}
 

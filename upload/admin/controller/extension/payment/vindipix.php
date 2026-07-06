@@ -11,7 +11,7 @@ class ControllerExtensionPaymentVindipix extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('payment_vindipix', $this->request->post);
+			$this->model_setting_setting->editSetting('vindipix', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -31,7 +31,7 @@ class ControllerExtensionPaymentVindipix extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_edit'] = sprintf($this->language->get('text_edit'), $this->ver());
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -121,116 +121,116 @@ class ControllerExtensionPaymentVindipix extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true);
 		
-		if (isset($this->request->post['payment_vindipix_title'])) {
-			$data['payment_vindipix_title'] = $this->request->post['payment_vindipix_title'];
+		if (isset($this->request->post['vindipix_title'])) {
+			$data['vindipix_title'] = $this->request->post['vindipix_title'];
 		} else {
-			$data['payment_vindipix_title'] = $this->config->get('payment_vindipix_title');
+			$data['vindipix_title'] = $this->config->get('vindipix_title');
 		}
 
-		if (isset($this->request->post['payment_vindipix_token'])) {
-			$data['payment_vindipix_token'] = $this->request->post['payment_vindipix_token'];
+		if (isset($this->request->post['vindipix_token'])) {
+			$data['vindipix_token'] = $this->request->post['vindipix_token'];
 		} else {
-			$data['payment_vindipix_token'] = $this->config->get('payment_vindipix_token');
+			$data['vindipix_token'] = $this->config->get('vindipix_token');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_days'])) {
-			$data['payment_vindipix_days'] = $this->request->post['payment_vindipix_days'];
+		if (isset($this->request->post['vindipix_days'])) {
+			$data['vindipix_days'] = $this->request->post['vindipix_days'];
 		} else {
-			$data['payment_vindipix_days'] = $this->config->get('payment_vindipix_days');
+			$data['vindipix_days'] = $this->config->get('vindipix_days');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_doc'])) {
-			$data['payment_vindipix_doc'] = $this->request->post['payment_vindipix_doc'];
+		if (isset($this->request->post['vindipix_doc'])) {
+			$data['vindipix_doc'] = $this->request->post['vindipix_doc'];
 		} else {
-			$data['payment_vindipix_doc'] = $this->config->get('payment_vindipix_doc');
+			$data['vindipix_doc'] = $this->config->get('vindipix_doc');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_doc2'])) {
-			$data['payment_vindipix_doc2'] = $this->request->post['payment_vindipix_doc2'];
+		if (isset($this->request->post['vindipix_doc2'])) {
+			$data['vindipix_doc2'] = $this->request->post['vindipix_doc2'];
 		} else {
-			$data['payment_vindipix_doc2'] = $this->config->get('payment_vindipix_doc2');
+			$data['vindipix_doc2'] = $this->config->get('vindipix_doc2');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_raz'])) {
-			$data['payment_vindipix_raz'] = $this->request->post['payment_vindipix_raz'];
+		if (isset($this->request->post['vindipix_raz'])) {
+			$data['vindipix_raz'] = $this->request->post['vindipix_raz'];
 		} else {
-			$data['payment_vindipix_raz'] = $this->config->get('payment_vindipix_raz');
+			$data['vindipix_raz'] = $this->config->get('vindipix_raz');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_type'])) {
-			$data['payment_vindipix_type'] = $this->request->post['payment_vindipix_type'];
+		if (isset($this->request->post['vindipix_type'])) {
+			$data['vindipix_type'] = $this->request->post['vindipix_type'];
 		} else {
-			$data['payment_vindipix_type'] = $this->config->get('payment_vindipix_type');
+			$data['vindipix_type'] = $this->config->get('vindipix_type');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_number'])) {
-			$data['payment_vindipix_number'] = $this->request->post['payment_vindipix_number'];
+		if (isset($this->request->post['vindipix_number'])) {
+			$data['vindipix_number'] = $this->request->post['vindipix_number'];
 		} else {
-			$data['payment_vindipix_number'] = $this->config->get('payment_vindipix_number');
+			$data['vindipix_number'] = $this->config->get('vindipix_number');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_complement'])) {
-			$data['payment_vindipix_complement'] = $this->request->post['payment_vindipix_complement'];
+		if (isset($this->request->post['vindipix_complement'])) {
+			$data['vindipix_complement'] = $this->request->post['vindipix_complement'];
 		} else {
-			$data['payment_vindipix_complement'] = $this->config->get('payment_vindipix_complement');
+			$data['vindipix_complement'] = $this->config->get('vindipix_complement');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_total'])) {
-			$data['payment_vindipix_total'] = $this->request->post['payment_vindipix_total'];
-		} elseif($this->config->has('payment_vindipix_total')) {
-			$data['payment_vindipix_total'] = $this->config->get('payment_vindipix_total');
+		if (isset($this->request->post['vindipix_total'])) {
+			$data['vindipix_total'] = $this->request->post['vindipix_total'];
+		} elseif($this->config->has('vindipix_total')) {
+			$data['vindipix_total'] = $this->config->get('vindipix_total');
 		} else {
-			$data['payment_vindipix_total'] = 5.00;
+			$data['vindipix_total'] = 5.00;
 		}
 
-		if (isset($this->request->post['payment_vindipix_order_status_id'])) {
-			$data['payment_vindipix_order_status_id'] = $this->request->post['payment_vindipix_order_status_id'];
+		if (isset($this->request->post['vindipix_order_status_id'])) {
+			$data['vindipix_order_status_id'] = $this->request->post['vindipix_order_status_id'];
 		} else {
-			$data['payment_vindipix_order_status_id'] = $this->config->get('payment_vindipix_order_status_id');
+			$data['vindipix_order_status_id'] = $this->config->get('vindipix_order_status_id');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_order_status_id1'])) {
-			$data['payment_vindipix_order_status_id1'] = $this->request->post['payment_vindipix_order_status_id1'];
+		if (isset($this->request->post['vindipix_order_status_id1'])) {
+			$data['vindipix_order_status_id1'] = $this->request->post['vindipix_order_status_id1'];
 		} else {
-			$data['payment_vindipix_order_status_id1'] = $this->config->get('payment_vindipix_order_status_id1');
+			$data['vindipix_order_status_id1'] = $this->config->get('vindipix_order_status_id1');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_order_status_id2'])) {
-			$data['payment_vindipix_order_status_id2'] = $this->request->post['payment_vindipix_order_status_id2'];
+		if (isset($this->request->post['vindipix_order_status_id2'])) {
+			$data['vindipix_order_status_id2'] = $this->request->post['vindipix_order_status_id2'];
 		} else {
-			$data['payment_vindipix_order_status_id2'] = $this->config->get('payment_vindipix_order_status_id2');
+			$data['vindipix_order_status_id2'] = $this->config->get('vindipix_order_status_id2');
 		}
 		
-		if (isset($this->request->post['payment_vindipix_order_status_id3'])) {
-			$data['payment_vindipix_order_status_id3'] = $this->request->post['payment_vindipix_order_status_id3'];
+		if (isset($this->request->post['vindipix_order_status_id3'])) {
+			$data['vindipix_order_status_id3'] = $this->request->post['vindipix_order_status_id3'];
 		} else {
-			$data['payment_vindipix_order_status_id3'] = $this->config->get('payment_vindipix_order_status_id3');
+			$data['vindipix_order_status_id3'] = $this->config->get('vindipix_order_status_id3');
 		}
 
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		if (isset($this->request->post['payment_vindipix_geo_zone_id'])) {
-			$data['payment_vindipix_geo_zone_id'] = $this->request->post['payment_vindipix_geo_zone_id'];
+		if (isset($this->request->post['vindipix_geo_zone_id'])) {
+			$data['vindipix_geo_zone_id'] = $this->request->post['vindipix_geo_zone_id'];
 		} else {
-			$data['payment_vindipix_geo_zone_id'] = $this->config->get('payment_vindipix_geo_zone_id');
+			$data['vindipix_geo_zone_id'] = $this->config->get('vindipix_geo_zone_id');
 		}
 
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-		if (isset($this->request->post['payment_vindipix_status'])) {
-			$data['payment_vindipix_status'] = $this->request->post['payment_vindipix_status'];
+		if (isset($this->request->post['vindipix_status'])) {
+			$data['vindipix_status'] = $this->request->post['vindipix_status'];
 		} else {
-			$data['payment_vindipix_status'] = $this->config->get('payment_vindipix_status');
+			$data['vindipix_status'] = $this->config->get('vindipix_status');
 		}
 
-		if (isset($this->request->post['payment_vindipix_sort_order'])) {
-			$data['payment_vindipix_sort_order'] = $this->request->post['payment_vindipix_sort_order'];
+		if (isset($this->request->post['vindipix_sort_order'])) {
+			$data['vindipix_sort_order'] = $this->request->post['vindipix_sort_order'];
 		} else {
-			$data['payment_vindipix_sort_order'] = $this->config->get('payment_vindipix_sort_order');
+			$data['vindipix_sort_order'] = $this->config->get('vindipix_sort_order');
 		}
 		
 		$this->load->model('customer/custom_field');
@@ -249,19 +249,19 @@ class ControllerExtensionPaymentVindipix extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!isset($this->request->post['payment_vindipix_token']) || $this->request->post['payment_vindipix_token'] == '' ) {
+		if (!isset($this->request->post['vindipix_token']) || $this->request->post['vindipix_token'] == '' ) {
 			$this->error['token'] = $this->language->get('error_token');
 		}
 		
-		if (!isset($this->request->post['payment_vindipix_doc']) || $this->request->post['payment_vindipix_doc'] == '' ) {
+		if (!isset($this->request->post['vindipix_doc']) || $this->request->post['vindipix_doc'] == '' ) {
 			$this->error['doc'] = $this->language->get('error_doc');
 		}
 		
-		if (!isset($this->request->post['payment_vindipix_title']) || $this->request->post['payment_vindipix_title'] == '' ) {
+		if (!isset($this->request->post['vindipix_title']) || $this->request->post['vindipix_title'] == '' ) {
 			$this->error['title'] = $this->language->get('error_title');
 		}
 		
-		if (!isset($this->request->post['payment_vindipix_number']) || $this->request->post['payment_vindipix_number'] == '' ) {
+		if (!isset($this->request->post['vindipix_number']) || $this->request->post['vindipix_number'] == '' ) {
 			$this->error['number'] = $this->language->get('error_number');
 		}
 

@@ -9,7 +9,7 @@
 	<file path="catalog/controller/checkout/success.php">
 		<operation error="skip">
         <search trim="true"><![CDATA[unset($this->session->data['shipping_method']);]]></search>
-		<add position="before"><![CDATA[if ($this->session->data['payment_method']['code'] == 'yapayb' || $this->session->data['payment_method']['code'] == 'yapayp') {
+		<add position="before"><![CDATA[if ($this->session->data['payment_method']['code'] == 'vindiboleto' || $this->session->data['payment_method']['code'] == 'vindipix') {
 			$oid = $this->session->data['order_id'];
 			}]]></add>
 		</operation>
@@ -17,19 +17,19 @@
         <search trim="true"><![CDATA[if ($this->customer->isLogged()) {]]></search>
 		<add position="replace" offset="4"><![CDATA[
             if(isset($oid)) {
-            if ($this->config->get('payment_vindicartao_status')) {
+            if ($this->config->get('vindicartao_status')) {
             $nome = 'vindicartao';
             }
 
-            if ($this->config->get('payment_vindiboleto_status')) {
+            if ($this->config->get('vindiboleto_status')) {
             $nome = 'vindiboleto';
             }
 
-            if ($this->config->get('payment_vindipix_status')) {
+            if ($this->config->get('vindipix_status')) {
             $nome = 'vindipix';
             }
 
-            $stat = $this->config->get('payment_' . $nome . '_order_status_id');
+            $stat = $this->config->get($nome . '_order_status_id');
             
             $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_history WHERE order_id = '" . (int)$oid . "' AND order_status_id = '" . (int)$stat . "' ORDER BY order_history_id DESC LIMIT 1");
             

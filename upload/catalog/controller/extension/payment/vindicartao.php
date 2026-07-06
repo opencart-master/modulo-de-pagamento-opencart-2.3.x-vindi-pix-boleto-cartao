@@ -33,7 +33,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		$campos = $order_info['custom_field'];
 		$ttotal = $order_info['total'];
-		$doc = preg_replace("/[^0-9]/", "", $campos[$this->config->get('payment_vindicartao_doc')]);
+		$doc = preg_replace("/[^0-9]/", "", $campos[$this->config->get('vindicartao_doc')]);
 		$data['doc'] = preg_replace("/[^0-9]/", "", $doc);
 		
 		$data['cards'] = array();
@@ -126,7 +126,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 	public function confirm() {
 	    $this->load->language('extension/payment/vindicartao');
 	    $json = array(); 
-		if ($this->session->data['payment_method']['code'] == 'vindicartao') {
+		if ($this->session->data['method']['code'] == 'vindicartao') {
 		$this->vindi = new VindiApi($this->registry);
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 					
@@ -228,17 +228,17 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		$tipocontato = 'H'; 
 		}
 		$campos = $order_info['custom_field'];
-		if (!empty($order_info['payment_custom_field'][$this->config->get('payment_vindicartao_complement')])) {
-		$complement = $order_info['payment_custom_field'][$this->config->get('payment_vindicartao_complement')];
+		if (!empty($order_info['custom_field'][$this->config->get('vindicartao_complement')])) {
+		$complement = $order_info['custom_field'][$this->config->get('vindicartao_complement')];
 		} else {
 		$complement = '';	
 		}
-		if (!empty($order_info['shipping_custom_field'][$this->config->get('payment_vindicartao_complement')])) {
-		$complement2 = $order_info['shipping_custom_field'][$this->config->get('payment_vindicartao_complement')];  
+		if (!empty($order_info['shipping_custom_field'][$this->config->get('vindicartao_complement')])) {
+		$complement2 = $order_info['shipping_custom_field'][$this->config->get('vindicartao_complement')];  
 		} else {
 		$complement2 = '';  	
 		}
-		$val["token_account"]  = $this->config->get('payment_vindicartao_token');
+		$val["token_account"]  = $this->config->get('vindicartao_token');
 		$val["customer"]["contacts"][1]["type_contact"] = $tipocontato;
 		$val["customer"]["contacts"][1]["number_contact"] = $telephone;
 
@@ -246,26 +246,26 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		$val["customer"]["addresses"][0]["type_address"] = "D";
 		$val["customer"]["addresses"][0]["postal_code"] = preg_replace("/[^0-9]/", "", $order_info['shipping_postcode']);
 		$val["customer"]["addresses"][0]["street"] = $order_info['shipping_address_1'];
-		$val["customer"]["addresses"][0]["number"] = $order_info['shipping_custom_field'][$this->config->get('payment_vindicartao_number')];
+		$val["customer"]["addresses"][0]["number"] = $order_info['shipping_custom_field'][$this->config->get('vindicartao_number')];
 		$val["customer"]["addresses"][0]["completion"] = $complement2;	
 		$val["customer"]["addresses"][0]["neighborhood"] = $order_info['shipping_address_2'];
 		$val["customer"]["addresses"][0]["city"] = $order_info['shipping_city'];
 		$val["customer"]["addresses"][0]["state"] = $order_info['shipping_zone_code'];  
 		}
 		$val["customer"]["addresses"][1]["type_address"] = "B";
-		$val["customer"]["addresses"][1]["postal_code"] = preg_replace("/[^0-9]/", "", $order_info['payment_postcode']);
-		$val["customer"]["addresses"][1]["street"] = $order_info['payment_address_1'];
-		$val["customer"]["addresses"][1]["number"] = $order_info['payment_custom_field'][$this->config->get('payment_vindicartao_number')];
+		$val["customer"]["addresses"][1]["postal_code"] = preg_replace("/[^0-9]/", "", $order_info['postcode']);
+		$val["customer"]["addresses"][1]["street"] = $order_info['address_1'];
+		$val["customer"]["addresses"][1]["number"] = $order_info['custom_field'][$this->config->get('vindicartao_number')];
 		$val["customer"]["addresses"][1]["completion"] = $complement;
-		$val["customer"]["addresses"][1]["neighborhood"] = $order_info['payment_address_2'];
-		$val["customer"]["addresses"][1]["city"] = $order_info['payment_city'];
-		$val["customer"]["addresses"][1]["state"] = $order_info['payment_zone_code'];
+		$val["customer"]["addresses"][1]["neighborhood"] = $order_info['address_2'];
+		$val["customer"]["addresses"][1]["city"] = $order_info['city'];
+		$val["customer"]["addresses"][1]["state"] = $order_info['zone_code'];
 		$val["customer"]["name"] =  $order_info['firstname']. ' '. $order_info['lastname'];
-		if (!empty($campos[$this->config->get('payment_vindicartao_doc2')]) && $this->config->get('payment_vindicartao_doc2') > 0 ) {
-		$doc2 = preg_replace("/[^0-9]/", "", $campos[$this->config->get('payment_vindicartao_doc2')]);
+		if (!empty($campos[$this->config->get('vindicartao_doc2')]) && $this->config->get('vindicartao_doc2') > 0 ) {
+		$doc2 = preg_replace("/[^0-9]/", "", $campos[$this->config->get('vindicartao_doc2')]);
 		$val["customer"]["cnpj"] = $doc2;
-		$val["customer"]["company_name"] = $campos[$this->config->get('payment_vindicartao_raz')];
-		$val["customer"]["trade_name"] =  $campos[$this->config->get('payment_vindicartao_raz')];
+		$val["customer"]["company_name"] = $campos[$this->config->get('vindicartao_raz')];
+		$val["customer"]["trade_name"] =  $campos[$this->config->get('vindicartao_raz')];
 		}
 		$val["customer"]["cpf"] = preg_replace("/[^0-9]/", "", $cpf);
 		$val["customer"]["email"] = $order_info['email'];
@@ -310,30 +310,30 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		if($resposta['message_response']['message'] == 'success') {
 			switch($resposta['data_response']['transaction']['status_id']) {
 				case '4':
-					$order_status_id = $this->config->get('payment_vindicartao_order_status_id');
+					$order_status_id = $this->config->get('vindicartao_order_status_id');
 					break;
 				case '6':
-					$order_status_id = $this->config->get('payment_vindicartao_order_status_id2');
+					$order_status_id = $this->config->get('vindicartao_order_status_id2');
 					break;
 				case '7':
-					$order_status_id = $this->config->get('payment_vindicartao_order_status_id1');
+					$order_status_id = $this->config->get('vindicartao_order_status_id1');
 					break;
 				case '24':
-					$order_status_id = $this->config->get('payment_vindicartao_order_status_id3');
+					$order_status_id = $this->config->get('vindicartao_order_status_id3');
 					break;
 				case '87':
-					$order_status_id = $this->config->get('payment_vindicartao_order_status_id5');
+					$order_status_id = $this->config->get('vindicartao_order_status_id5');
 					break;
 				case '89':
-					$order_status_id = $this->config->get('payment_vindicartao_order_status_id4');
+					$order_status_id = $this->config->get('vindicartao_order_status_id4');
 					break;
 			}
 		$comment  = "Situação: " . $resposta['data_response']['transaction']['status_name'] . "\n";
 		$comment .= "ID: " . $resposta['data_response']['transaction']['transaction_id'] . "\n";
 		$comment .= "Token: " . $resposta['data_response']['transaction']['token_transaction'] . "\n";
-		$comment .= "Detalhe: " . $resposta['data_response']['transaction']['payment']['payment_response'] . "\n";
+		$comment .= "Detalhe: " . $resposta['data_response']['transaction']['payment']['response'] . "\n";
 		$comment .= "TID: " . $resposta['data_response']['transaction']['payment']['tid'] . "\n";
-		$comment .= "Bandeira: " . $resposta['data_response']['transaction']['payment']['payment_method_name'] . "\n";
+		$comment .= "Bandeira: " . $resposta['data_response']['transaction']['payment']['method_name'] . "\n";
 		$comment .= "Número de Parcelas: " . $resposta['data_response']['transaction']['payment']['split'] . "\n";
 		$json['success'] = "Success";  
 		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $order_status_id, $comment, $notify = true);
@@ -394,35 +394,35 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 	        $this->load->model('checkout/order');
 			$order_info = $this->model_checkout_order->getOrder($oid);
 			
-			if ($order_info && $this->request->post['token_transaction'] && $this->request->post['transaction']['transaction_id'] && $order_info['payment_code'] == 'vindicartao') {
+			if ($order_info && $this->request->post['token_transaction'] && $this->request->post['transaction']['transaction_id'] && $order_info['code'] == 'vindicartao') {
 		        $order_status_ids = $order_info['order_status_id'];
-				$order_status_id = $this->config->get('payment_vindicartao_order_status_id');
+				$order_status_id = $this->config->get('vindicartao_order_status_id');
 
 				switch($this->request->post['transaction']['status_id']) {
 					case '4':
-						$order_status_id = $this->config->get('payment_vindicartao_order_status_id');
+						$order_status_id = $this->config->get('vindicartao_order_status_id');
 						break;
 					case '6':
-						$order_status_id = $this->config->get('payment_vindicartao_order_status_id2');
+						$order_status_id = $this->config->get('vindicartao_order_status_id2');
 						break;
 					case '7':
-						$order_status_id = $this->config->get('payment_vindicartao_order_status_id1');
+						$order_status_id = $this->config->get('vindicartao_order_status_id1');
 						break;
 					case '24':
-						$order_status_id = $this->config->get('payment_vindicartao_order_status_id3');
+						$order_status_id = $this->config->get('vindicartao_order_status_id3');
 						break;
 					case '87':
-						$order_status_id = $this->config->get('payment_vindicartao_order_status_id5');
+						$order_status_id = $this->config->get('vindicartao_order_status_id5');
 						break;
 					case '89':
-						$order_status_id = $this->config->get('payment_vindicartao_order_status_id4');
+						$order_status_id = $this->config->get('vindicartao_order_status_id4');
 						break;
 				}
 				
 				$comment  = "Token: " . $this->request->post['transaction']['transaction_token'] . "\n";
 		        $comment .= "Valor Pago: " . $this->request->post['transaction']['price_payment'] . "\n";
 		        $comment .= "Situação: ". $this->request->post['transaction']['status_name'] ."\n";
-		        $comment .= "Pago Com: "	. $this->request->post['transaction']['payment_method_name'];
+		        $comment .= "Pago Com: "	. $this->request->post['transaction']['method_name'];
                 
                 if ($order_status_ids != $order_status_id) {
                 $this->model_checkout_order->addOrderHistory($oid, $order_status_id, $comment, $notify = true);
@@ -540,24 +540,24 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 	$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 	$ttotal = $order_info['total'];
 	  
-	if (!empty($this->config->get('payment_vindicartao_parcela_min')) || $this->config->get('payment_vindicartao_parcela_min') > 0) {
-		$parcela = $ttotal / (int)$this->config->get('payment_vindicartao_parcela_min');
+	if (!empty($this->config->get('vindicartao_parcela_min')) || $this->config->get('vindicartao_parcela_min') > 0) {
+		$parcela = $ttotal / (int)$this->config->get('vindicartao_parcela_min');
 		
 	if ((int)$parcela == 0) {
 		$parcela = 1;
-	} else if ((int)$parcela > $this->config->get('payment_vindicartao_parcela')) {
-		$parcela = (int)$this->config->get('payment_vindicartao_parcela');
+	} else if ((int)$parcela > $this->config->get('vindicartao_parcela')) {
+		$parcela = (int)$this->config->get('vindicartao_parcela');
 	} else {
 		$parcela = (int)$parcela;
 	}
 		
 	} else {
-		$parcela = (int)$this->config->get('payment_vindicartao_parcela');
+		$parcela = (int)$this->config->get('vindicartao_parcela');
 	}
 
 	$parcs = array(); 
 
-	$vals["token_account"]  = $this->config->get('payment_vindicartao_token');
+	$vals["token_account"]  = $this->config->get('vindicartao_token');
 	$vals["price"]  = $ttotal;
 	$vals["type_response"]  = "J";
 
@@ -565,9 +565,9 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		  
     if($resps['message_response']['message'] == 'success') {
         
-        foreach($resps['data_response']['payment_methods'] as $key => $value) {
+        foreach($resps['data_response']['methods'] as $key => $value) {
                 
-            if($value['payment_method_id'] == $this->request->get['bandeira_id']) {
+            if($value['method_id'] == $this->request->get['bandeira_id']) {
              
              foreach($value['splittings'] as $splits) {
 				if ($splits['split'] <= $parcela) {

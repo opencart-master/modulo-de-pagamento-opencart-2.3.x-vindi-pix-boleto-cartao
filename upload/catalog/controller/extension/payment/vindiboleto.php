@@ -12,7 +12,7 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 
 	public function confirm() {
 	    $json = array(); 
-		if ($this->session->data['payment_method']['code'] == 'vindiboleto') {
+		if ($this->session->data['method']['code'] == 'vindiboleto') {
 		$this->vindi = new VindiApi($this->registry);
         $this->load->model('checkout/order');
 			
@@ -24,17 +24,17 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 			$tipocontato = 'H'; 
 			}
 			$campos = $order_info['custom_field'];
-			if (!empty($order_info['payment_custom_field'][$this->config->get('payment_vindiboleto_complement')])) {
-			$complement = $order_info['payment_custom_field'][$this->config->get('payment_vindiboleto_complement')];
+			if (!empty($order_info['custom_field'][$this->config->get('vindiboleto_complement')])) {
+			$complement = $order_info['custom_field'][$this->config->get('vindiboleto_complement')];
 			} else {
 			$complement = '';	
 			}
-			if (!empty($order_info['shipping_custom_field'][$this->config->get('payment_vindiboleto_complement')])) {
-			$complement2 = $order_info['shipping_custom_field'][$this->config->get('payment_vindiboleto_complement')];  
+			if (!empty($order_info['shipping_custom_field'][$this->config->get('vindiboleto_complement')])) {
+			$complement2 = $order_info['shipping_custom_field'][$this->config->get('vindiboleto_complement')];  
 			} else {
 			$complement2 = '';  	
 			}
-			$val["token_account"]  = $this->config->get('payment_vindiboleto_token');
+			$val["token_account"]  = $this->config->get('vindiboleto_token');
 			$val["customer"]["contacts"][1]["type_contact"] = $tipocontato;
 			$val["customer"]["contacts"][1]["number_contact"] = $telephone;
 			
@@ -42,29 +42,29 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 			$val["customer"]["addresses"][0]["type_address"] = "D";
 			$val["customer"]["addresses"][0]["postal_code"] = preg_replace("/[^0-9]/", "", $order_info['shipping_postcode']);
 			$val["customer"]["addresses"][0]["street"] = $order_info['shipping_address_1'];
-			$val["customer"]["addresses"][0]["number"] = $order_info['shipping_custom_field'][$this->config->get('payment_vindiboleto_number')];
+			$val["customer"]["addresses"][0]["number"] = $order_info['shipping_custom_field'][$this->config->get('vindiboleto_number')];
 			$val["customer"]["addresses"][0]["completion"] = $complement2;	
 			$val["customer"]["addresses"][0]["neighborhood"] = $order_info['shipping_address_2'];
 			$val["customer"]["addresses"][0]["city"] = $order_info['shipping_city'];
 			$val["customer"]["addresses"][0]["state"] = $order_info['shipping_zone_code'];         
 			}
 			$val["customer"]["addresses"][1]["type_address"] = "B";
-			$val["customer"]["addresses"][1]["postal_code"] = preg_replace("/[^0-9]/", "", $order_info['payment_postcode']);
-			$val["customer"]["addresses"][1]["street"] = $order_info['payment_address_1'];
-			$val["customer"]["addresses"][1]["number"] = $order_info['payment_custom_field'][$this->config->get('payment_vindiboleto_number')];
+			$val["customer"]["addresses"][1]["postal_code"] = preg_replace("/[^0-9]/", "", $order_info['postcode']);
+			$val["customer"]["addresses"][1]["street"] = $order_info['address_1'];
+			$val["customer"]["addresses"][1]["number"] = $order_info['custom_field'][$this->config->get('vindiboleto_number')];
 			$val["customer"]["addresses"][1]["completion"] = $complement;
-			$val["customer"]["addresses"][1]["neighborhood"] = $order_info['payment_address_2'];
-			$val["customer"]["addresses"][1]["city"] = $order_info['payment_city'];
-			$val["customer"]["addresses"][1]["state"] = $order_info['payment_zone_code'];
+			$val["customer"]["addresses"][1]["neighborhood"] = $order_info['address_2'];
+			$val["customer"]["addresses"][1]["city"] = $order_info['city'];
+			$val["customer"]["addresses"][1]["state"] = $order_info['zone_code'];
 			$val["customer"]["name"] = $order_info['firstname']. ' '. $order_info['lastname'];
-			if (!empty($campos[$this->config->get('payment_vindiboleto_doc2')]) && $this->config->get('payment_vindiboleto_doc2') > 0 ) {
-			$doc2 = preg_replace("/[^0-9]/", "", $campos[$this->config->get('payment_vindiboleto_doc2')]);
+			if (!empty($campos[$this->config->get('vindiboleto_doc2')]) && $this->config->get('vindiboleto_doc2') > 0 ) {
+			$doc2 = preg_replace("/[^0-9]/", "", $campos[$this->config->get('vindiboleto_doc2')]);
 			$val["customer"]["cnpj"] = $doc2;
-			$val["customer"]["company_name"] = $campos[$this->config->get('payment_vindiboleto_raz')];
-			$val["customer"]["trade_name"] =  $campos[$this->config->get('payment_vindiboleto_raz')];
+			$val["customer"]["company_name"] = $campos[$this->config->get('vindiboleto_raz')];
+			$val["customer"]["trade_name"] =  $campos[$this->config->get('vindiboleto_raz')];
 			} 
-			if (!empty($campos[$this->config->get('payment_vindiboleto_doc')])) {
-			$doc = preg_replace("/[^0-9]/", "", $campos[$this->config->get('payment_vindiboleto_doc')]);
+			if (!empty($campos[$this->config->get('vindiboleto_doc')])) {
+			$doc = preg_replace("/[^0-9]/", "", $campos[$this->config->get('vindiboleto_doc')]);
 			$val["customer"]["cpf"] = $doc;
 			} else {
 			$val["customer"]["cpf"] = " ";    
@@ -90,10 +90,10 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 			$val["transaction"]["url_notification"] = HTTPS_SERVER . 'index.php?route=extension/payment/vindiboleto/callback';
 			$val["transaction"]["order_number"] = $this->session->data['order_id'];
 			$val["transaction"]["customer_ip"] = $this->request->server['REMOTE_ADDR'];
-			if($this->config->get('payment_vindiboleto_days') == '') {
+			if($this->config->get('vindiboleto_days') == '') {
 			$num = 0;
 			} else {
-			$num = $this->config->get('payment_vindiboleto_days');	
+			$num = $this->config->get('vindiboleto_days');	
 			}
 			$hoje = date('d-m-Y');
 			$datavenc = date('d/m/Y', strtotime('+ '. $num .' days', strtotime($hoje)));
@@ -119,7 +119,7 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 			";
 			$json['success'] = "Success";
 			$json['continue'] = $this->url->link('checkout/success');
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_vindiboleto_order_status_id'), $comment, $notify = true);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('vindiboleto_order_status_id'), $comment, $notify = true);
 			} else {
 			if (isset($resposta['error_response']['general_errors']) && !empty($resposta['error_response']['general_errors'])) {
 			foreach ($resposta['error_response']['general_errors'] as $general_error){
@@ -175,36 +175,36 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 	        $this->load->model('checkout/order');
 			$order_info = $this->model_checkout_order->getOrder($oid);
 			
-			if ($order_info && $this->request->post['token_transaction'] && $this->request->post['transaction']['transaction_id'] && $order_info['payment_code'] == 'vindiboleto') {
+			if ($order_info && $this->request->post['token_transaction'] && $this->request->post['transaction']['transaction_id'] && $order_info['code'] == 'vindiboleto') {
 			    
 		        $order_status_ids = $order_info['order_status_id'];
-				$order_status_id = $this->config->get('payment_vindiboleto_order_status_id');
+				$order_status_id = $this->config->get('vindiboleto_order_status_id');
 
 				switch($this->request->post['transaction']['status_id']) {
 					case '4':
-						$order_status_id = $this->config->get('payment_vindiboleto_order_status_id');
+						$order_status_id = $this->config->get('vindiboleto_order_status_id');
 						break;
 					case '6':
-						$order_status_id = $this->config->get('payment_vindiboleto_order_status_id2');
+						$order_status_id = $this->config->get('vindiboleto_order_status_id2');
 						break;
 					case '7':
-						$order_status_id = $this->config->get('payment_vindiboleto_order_status_id1');
+						$order_status_id = $this->config->get('vindiboleto_order_status_id1');
 						break;
 					case '24':
-						$order_status_id = $this->config->get('payment_vindiboleto_order_status_id3');
+						$order_status_id = $this->config->get('vindiboleto_order_status_id3');
 						break;
 					case '87':
-						$order_status_id = $this->config->get('payment_vindiboleto_order_status_id');
+						$order_status_id = $this->config->get('vindiboleto_order_status_id');
 						break;
 					case '89':
-						$order_status_id = $this->config->get('payment_vindiboleto_order_status_id1');
+						$order_status_id = $this->config->get('vindiboleto_order_status_id1');
 						break;
 				}
 				
 				$comment  = "Token: " . $this->request->post['transaction']['transaction_token'] . "\n";
 		        $comment .= "Valor Pago: " . $this->request->post['transaction']['price_payment'] . "\n";
 		        $comment .= "Situação: ". $this->request->post['transaction']['status_name'] ."\n";
-		        $comment .= "Pago Com: "	. $this->request->post['transaction']['payment_method_name'];
+		        $comment .= "Pago Com: "	. $this->request->post['transaction']['method_name'];
                 
                 if ($order_status_ids != $order_status_id) {
                 $this->model_checkout_order->addOrderHistory($oid, $order_status_id, $comment, $notify = true);
