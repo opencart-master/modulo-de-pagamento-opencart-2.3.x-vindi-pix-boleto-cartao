@@ -9,12 +9,14 @@
 	<file path="catalog/controller/checkout/success.php">
 		<operation error="skip">
         <search trim="true"><![CDATA[unset($this->session->data['shipping_method']);]]></search>
-		<add position="before"><![CDATA[if ($this->session->data['payment_method']['code'] == 'vindiboleto' || $this->session->data['payment_method']['code'] == 'vindipix') {
+		<add position="before"><![CDATA[
+		    if ($this->session->data['payment_method']['code'] == 'vindiboleto' || $this->session->data['payment_method']['code'] == 'vindipix') {
 			$oid = $this->session->data['order_id'];
-			}]]></add>
+			}
+			]]></add>
 		</operation>
         <operation error="skip">
-        <search trim="true"><![CDATA[if ($this->customer->isLogged()) {]]></search>
+        <search trim="true" index="1"><![CDATA[if ($this->customer->isLogged()) {]]></search>
 		<add position="replace" offset="4"><![CDATA[
             if(isset($oid)) {
             if ($this->config->get('vindicartao_status')) {
@@ -39,10 +41,10 @@
             }
             
             if ($this->customer->isLogged()) {
-                $data['text_message'] .= sprintf($this->language->get('text_customer'), $this->url->link('account/account', '', true), $this->url->link('account/order', '', true), $this->url->link('account/download', '', true), $this->url->link('information/contact'));
-            } else {
-                $data['text_message'] .= sprintf($this->language->get('text_guest'), $this->url->link('information/contact'));
-            }
+			$data['text_message'] .= sprintf($this->language->get('text_customer'), $this->url->link('account/account', '', true), $this->url->link('account/order', '', true), $this->url->link('account/download', '', true), $this->url->link('information/contact'));
+		    } else {
+			$data['text_message'] .= sprintf($this->language->get('text_guest'), $this->url->link('information/contact'));
+		    }
 		]]></add>
 		</operation>
 	</file>
