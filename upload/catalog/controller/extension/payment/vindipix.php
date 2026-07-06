@@ -50,13 +50,13 @@ class ControllerExtensionPaymentVindipix extends Controller {
             $val["customer"]["addresses"][0]["state"] = $order_info['shipping_zone_code'];         
 			}
 			$val["customer"]["addresses"][1]["type_address"] = "B";
-            $val["customer"]["addresses"][1]["postal_code"] = preg_replace("/[^0-9]/", "", $order_info['postcode']);
-            $val["customer"]["addresses"][1]["street"] = $order_info['address_1'];
-            $val["customer"]["addresses"][1]["number"] = $order_info['custom_field'][$this->config->get('vindipix_number')];
+            $val["customer"]["addresses"][1]["postal_code"] = preg_replace("/[^0-9]/", "", $order_info['payment_postcode']);
+            $val["customer"]["addresses"][1]["street"] = $order_info['payment_address_1'];
+            $val["customer"]["addresses"][1]["number"] = $order_info['payment_custom_field'][$this->config->get('vindipix_number')];
 			$val["customer"]["addresses"][1]["completion"] = $complement;
-            $val["customer"]["addresses"][1]["neighborhood"] = $order_info['address_2'];
-            $val["customer"]["addresses"][1]["city"] = $order_info['city'];
-            $val["customer"]["addresses"][1]["state"] = $order_info['zone_code'];
+            $val["customer"]["addresses"][1]["neighborhood"] = $order_info['payment_address_2'];
+            $val["customer"]["addresses"][1]["city"] = $order_info['payment_city'];
+            $val["customer"]["addresses"][1]["state"] = $order_info['payment_zone_code'];
 			$val["customer"]["name"] = $order_info['firstname']. ' '. $order_info['lastname'];
 			if (!empty($campos[$this->config->get('vindipix_doc2')]) && $this->config->get('vindipix_doc2') > 0 ) {
 			$doc2 = preg_replace("/[^0-9]/", "", $campos[$this->config->get('vindipix_doc2')]);
