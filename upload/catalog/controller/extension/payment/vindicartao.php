@@ -228,8 +228,8 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		$tipocontato = 'H'; 
 		}
 		$campos = $order_info['custom_field'];
-		if (!empty($order_info['custom_field'][$this->config->get('vindicartao_complement')])) {
-		$complement = $order_info['custom_field'][$this->config->get('vindicartao_complement')];
+		if (!empty($order_info['payment_custom_field'][$this->config->get('vindicartao_complement')])) {
+		$complement = $order_info['payment_custom_field'][$this->config->get('vindicartao_complement')];
 		} else {
 		$complement = '';	
 		}
@@ -331,9 +331,9 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		$comment  = "Situação: " . $resposta['data_response']['transaction']['status_name'] . "\n";
 		$comment .= "ID: " . $resposta['data_response']['transaction']['transaction_id'] . "\n";
 		$comment .= "Token: " . $resposta['data_response']['transaction']['token_transaction'] . "\n";
-		$comment .= "Detalhe: " . $resposta['data_response']['transaction']['payment']['response'] . "\n";
+		$comment .= "Detalhe: " . $resposta['data_response']['transaction']['payment']['payment_response'] . "\n";
 		$comment .= "TID: " . $resposta['data_response']['transaction']['payment']['tid'] . "\n";
-		$comment .= "Bandeira: " . $resposta['data_response']['transaction']['payment']['method_name'] . "\n";
+		$comment .= "Bandeira: " . $resposta['data_response']['transaction']['payment']['payment_method_name'] . "\n";
 		$comment .= "Número de Parcelas: " . $resposta['data_response']['transaction']['payment']['split'] . "\n";
 		$json['success'] = "Success";  
 		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $order_status_id, $comment, $notify = true);
@@ -422,7 +422,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 				$comment  = "Token: " . $this->request->post['transaction']['transaction_token'] . "\n";
 		        $comment .= "Valor Pago: " . $this->request->post['transaction']['price_payment'] . "\n";
 		        $comment .= "Situação: ". $this->request->post['transaction']['status_name'] ."\n";
-		        $comment .= "Pago Com: "	. $this->request->post['transaction']['method_name'];
+		        $comment .= "Pago Com: "	. $this->request->post['transaction']['payment_method_name'];
                 
                 if ($order_status_ids != $order_status_id) {
                 $this->model_checkout_order->addOrderHistory($oid, $order_status_id, $comment, $notify = true);
@@ -565,9 +565,9 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 		  
     if($resps['message_response']['message'] == 'success') {
         
-        foreach($resps['data_response']['methods'] as $key => $value) {
+        foreach($resps['data_response']['payment_methods'] as $key => $value) {
                 
-            if($value['method_id'] == $this->request->get['bandeira_id']) {
+            if($value['payment_method_id'] == $this->request->get['bandeira_id']) {
              
              foreach($value['splittings'] as $splits) {
 				if ($splits['split'] <= $parcela) {

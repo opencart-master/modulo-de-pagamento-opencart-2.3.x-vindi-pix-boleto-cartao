@@ -24,8 +24,8 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 			$tipocontato = 'H'; 
 			}
 			$campos = $order_info['custom_field'];
-			if (!empty($order_info['custom_field'][$this->config->get('vindiboleto_complement')])) {
-			$complement = $order_info['custom_field'][$this->config->get('vindiboleto_complement')];
+			if (!empty($order_info['payment_custom_field'][$this->config->get('vindiboleto_complement')])) {
+			$complement = $order_info['payment_custom_field'][$this->config->get('vindiboleto_complement')];
 			} else {
 			$complement = '';	
 			}
@@ -204,7 +204,7 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 				$comment  = "Token: " . $this->request->post['transaction']['transaction_token'] . "\n";
 		        $comment .= "Valor Pago: " . $this->request->post['transaction']['price_payment'] . "\n";
 		        $comment .= "Situação: ". $this->request->post['transaction']['status_name'] ."\n";
-		        $comment .= "Pago Com: "	. $this->request->post['transaction']['method_name'];
+		        $comment .= "Pago Com: "	. $this->request->post['transaction']['payment_method_name'];
                 
                 if ($order_status_ids != $order_status_id) {
                 $this->model_checkout_order->addOrderHistory($oid, $order_status_id, $comment, $notify = true);
