@@ -175,7 +175,7 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 	        $this->load->model('checkout/order');
 			$order_info = $this->model_checkout_order->getOrder($oid);
 			
-			if ($order_info && $this->request->post['token_transaction'] && $this->request->post['transaction']['transaction_id'] && $order_info['code'] == 'vindiboleto') {
+			if ($order_info && $this->request->post['token_transaction'] && $this->request->post['transaction']['transaction_id'] && $order_info['payment_code'] == 'vindiboleto') {
 			    
 		        $order_status_ids = $order_info['order_status_id'];
 				$order_status_id = $this->config->get('vindiboleto_order_status_id');
