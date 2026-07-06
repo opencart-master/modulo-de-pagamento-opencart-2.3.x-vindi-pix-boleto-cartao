@@ -126,7 +126,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
 	public function confirm() {
 	    $this->load->language('extension/payment/vindicartao');
 	    $json = array(); 
-		if ($this->session->data['method']['code'] == 'vindicartao') {
+		if ($this->session->data['payment_method']['code'] == 'vindicartao') {
 		$this->vindi = new VindiApi($this->registry);
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 					
@@ -533,7 +533,7 @@ class ControllerExtensionPaymentVindicartao extends Controller {
   }
   
   public function parcela() {
-		$this->vindi = new VindiApi($this->registry);
+	$this->vindi = new VindiApi($this->registry);
 	$json = array();
 		
 	$this->load->model('checkout/order');

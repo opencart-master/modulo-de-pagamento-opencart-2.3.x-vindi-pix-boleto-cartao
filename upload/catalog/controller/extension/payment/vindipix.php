@@ -12,7 +12,7 @@ class ControllerExtensionPaymentVindipix extends Controller {
 
 	public function confirm() {
 	    $json = array(); 
-		if ($this->session->data['method']['code'] == 'vindipix') {
+		if ($this->session->data['payment_method']['code'] == 'vindipix') {
         $this->vindi = new VindiApi($this->registry);
 
 			$this->load->model('checkout/order');

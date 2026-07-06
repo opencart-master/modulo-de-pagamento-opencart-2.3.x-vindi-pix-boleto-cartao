@@ -12,7 +12,7 @@ class ControllerExtensionPaymentVindiboleto extends Controller {
 
 	public function confirm() {
 	    $json = array(); 
-		if ($this->session->data['method']['code'] == 'vindiboleto') {
+		if ($this->session->data['payment_method']['code'] == 'vindiboleto') {
 		$this->vindi = new VindiApi($this->registry);
         $this->load->model('checkout/order');
 			
