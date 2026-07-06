@@ -35,7 +35,7 @@
             
             $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_history WHERE order_id = '" . (int)$oid . "' AND order_status_id = '" . (int)$stat . "' ORDER BY order_history_id DESC LIMIT 1");
             
-            $data['text_message'] = nl2br($query->row['comment']);
+            $data['text_message'] = nl2br($query->row['comment']) ."<br><hr>";
             } else {
             $data['text_message'] = '';
             }
