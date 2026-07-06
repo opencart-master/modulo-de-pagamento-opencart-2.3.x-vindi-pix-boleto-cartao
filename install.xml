@@ -75,7 +75,7 @@
 
     <file path="admin/controller/common/dashboard.php">
     <operation error="skip">
-        <search trim="true"><![CDATA[$this->load->model('setting/extension');]]></search>
+        <search trim="true"><![CDATA[$this->load->model('extension/extension');]]></search>
 		<add position="before"><![CDATA[
     $this->vindi = new VindiApi($this->registry);
     if($this->vindi->checkUpdate()) {
